@@ -109,7 +109,7 @@ while ano < 2025 or mes < 12:
                 ano,  # year
                 mes,  # month
                 hos,  # CNES
-                (mes - 1) / 3 + 1,  # quarter
+                int((mes - 1) / 3 + 1),  # quarter
                 ano * 12 + mes,  # time_index
                 np.sin(2 * np.pi * mes / 12),  # sin_month
                 np.cos(2 * np.pi * mes / 12),  # cos_month
