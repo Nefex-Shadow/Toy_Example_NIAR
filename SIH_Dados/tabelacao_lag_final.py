@@ -16,6 +16,14 @@ main_df = pd.read_csv("./Tabela_Agregada.csv")
 dados_finais = []
 
 
+def get_J_count_janela(df, ano, mes, tam):
+    ano_piso, mes_piso = calculo_lag(ano, mes, tam)
+    return df[
+        ((df.year > ano_piso) | ((df.year == ano_piso) & (df.month >= mes_piso)))
+        & ((df.year < ano) | ((df.year == ano) & (df.month < mes)))
+    ]["J_count"]
+
+
 ano = 2022
 mes = 1
 
@@ -202,11 +210,29 @@ while ano < 2025 or mes < 12:
                 ]
             )
 
+        # Usado para calculo do moving average
+        df_ma = main_df[["year", "month", "CNES", "J_count"]][main_df.CNES == hos]
+        ma3 = get_J_count_janela(df_ma, ano, mes, 3)
+        ma6 = get_J_count_janela(df_ma, ano, mes, 6)
+        ma12 = get_J_count_janela(df_ma, ano, mes, 12)
+
+        val_ma3 = np.nan
+        if ma3.shape[0] == 3:
+            val_ma3 = ma3.mean()
+
+        val_ma6 = np.nan
+        if ma6.shape[0] == 6:
+            val_ma6 = ma6.mean()
+
+        val_ma12 = np.nan
+        if ma12.shape[0] == 12:
+            val_ma12 = ma12.mean()
+
         val.extend(
             [
-                np.nan,  # J_count_ma3_lag1
-                np.nan,  # J_count_ma6_lag1
-                np.nan,  # J_count_ma12_lag1
+                val_ma3,  # J_count_ma3_lag1
+                val_ma6,  # J_count_ma6_lag1
+                val_ma12,  # J_count_ma12_lag1
                 val[7] - val[30],  # J_growth_1m_lag1
                 hos_df.J_count.values[0],  # J_count
             ]
