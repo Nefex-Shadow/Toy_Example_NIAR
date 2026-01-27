@@ -11,17 +11,47 @@ def calculo_lag(ano, mes, lag):
     return (r_ano, r_mes)
 
 
-main_df = pd.read_csv("./Tabela_Agregada.csv")
-
-dados_finais = []
-
-
 def get_J_count_janela(df, ano, mes, tam):
     ano_piso, mes_piso = calculo_lag(ano, mes, tam)
     return df[
         ((df.year > ano_piso) | ((df.year == ano_piso) & (df.month >= mes_piso)))
         & ((df.year < ano) | ((df.year == ano) & (df.month < mes)))
     ]["J_count"]
+
+
+main_df = pd.read_csv("./Tabela_Agregada.csv")
+dados_finais = []
+
+filt_hos = []
+hos_group = []
+for hos in main_df["CNES"].unique():
+    total = main_df[["CNES", "J_count"]][main_df.CNES == hos]["J_count"].sum()
+
+    # Media mensal abaixo de 5
+    if total / 35 <= 5:
+        filt_hos.append(hos)
+    else:
+        hos_group.append([hos, total])
+
+
+main_df = main_df[main_df.CNES.isin(filt_hos) == False]
+hos_df = pd.DataFrame(hos_group, columns=["CNES", "Total"])
+[q1, q2, q3] = hos_df["Total"].quantile([0.25, 0.5, 0.75])
+main_df = pd.merge(main_df, hos_df, on="CNES", how="left")
+
+
+def get_hosp_porte(linha):
+    if linha["Total"] < q1:
+        return 0
+    if linha["Total"] < q2:
+        return 1
+    if linha["Total"] < q3:
+        return 2
+    return 3
+
+
+main_df["hospital_porte"] = main_df.apply(get_hosp_porte, axis=1)
+print(main_df)
 
 
 ano = 2022
@@ -35,7 +65,7 @@ while ano < 2025 or mes < 12:
     for hos in hos_all:
         hos_df = main_df[main_df.CNES == hos]
 
-        # [0 - 6]
+        # [0 - 7]
         val = [
             ano,  # year
             mes,  # month
@@ -44,13 +74,14 @@ while ano < 2025 or mes < 12:
             ano * 12 + mes,  # time_index
             np.sin(2 * np.pi * mes / 12),  # sin_month
             np.cos(2 * np.pi * mes / 12),  # cos_month
+            hos_df.hospital_porte.values[0],  # hospital_porte
         ]
 
         # LAG 1
         (l_ano, l_mes) = calculo_lag(ano, mes, 1)
         lag_1 = hos_df[(hos_df.year == l_ano) & (hos_df.month == l_mes)]
 
-        # [7 - 29]
+        # [8 - 30]
         if lag_1.empty:
             val.extend([np.nan for _ in range(0, 23)])
         else:
@@ -92,7 +123,7 @@ while ano < 2025 or mes < 12:
         (l_ano, l_mes) = calculo_lag(ano, mes, 2)
         lag_2 = hos_df[(hos_df.year == l_ano) & (hos_df.month == l_mes)]
 
-        # [30 - 35]
+        # [31 - 36]
         if lag_2.empty:
             val.extend([np.nan for _ in range(0, 6)])
         else:
@@ -111,7 +142,7 @@ while ano < 2025 or mes < 12:
         (l_ano, l_mes) = calculo_lag(ano, mes, 3)
         lag_3 = hos_df[(hos_df.year == l_ano) & (hos_df.month == l_mes)]
 
-        # [36 - 58]
+        # [37 - 59]
         if lag_3.empty:
             val.extend([np.nan for _ in range(0, 23)])
         else:
@@ -153,7 +184,7 @@ while ano < 2025 or mes < 12:
         (l_ano, l_mes) = calculo_lag(ano, mes, 6)
         lag_6 = hos_df[(hos_df.year == l_ano) & (hos_df.month == l_mes)]
 
-        # [59 - 64]
+        # [60 - 65]
         if lag_6.empty:
             val.extend([np.nan for _ in range(0, 6)])
         else:
@@ -172,7 +203,7 @@ while ano < 2025 or mes < 12:
         (l_ano, l_mes) = calculo_lag(ano, mes, 12)
         lag_12 = hos_df[(hos_df.year == l_ano) & (hos_df.month == l_mes)]
 
-        # [65 - 87]
+        # [66 - 88]
         if lag_12.empty:
             val.extend([np.nan for _ in range(0, 23)])
         else:
@@ -211,10 +242,10 @@ while ano < 2025 or mes < 12:
             )
 
         # Usado para calculo do moving average
-        df_ma = main_df[["year", "month", "CNES", "J_count"]][main_df.CNES == hos]
-        ma3 = get_J_count_janela(df_ma, ano, mes, 3)
-        ma6 = get_J_count_janela(df_ma, ano, mes, 6)
-        ma12 = get_J_count_janela(df_ma, ano, mes, 12)
+        df_aux = main_df[["year", "month", "CNES", "J_count"]][main_df.CNES == hos]
+        ma3 = get_J_count_janela(df_aux, ano, mes, 3)
+        ma6 = get_J_count_janela(df_aux, ano, mes, 6)
+        ma12 = get_J_count_janela(df_aux, ano, mes, 12)
 
         val_ma3 = np.nan
         if ma3.shape[0] == 3:
@@ -233,7 +264,7 @@ while ano < 2025 or mes < 12:
                 val_ma3,  # J_count_ma3_lag1
                 val_ma6,  # J_count_ma6_lag1
                 val_ma12,  # J_count_ma12_lag1
-                val[7] - val[30],  # J_growth_1m_lag1
+                val[8] - val[31],  # J_growth_1m_lag1
                 hos_df.J_count.values[0],  # J_count
             ]
         )
@@ -256,6 +287,7 @@ df_final = pd.DataFrame(
         "time_index",
         "sin_month",
         "cos_month",
+        "hospital_porte",
         "J_count_lag1",
         "J00_06_share_lag1",
         "J09_18_share_lag1",
