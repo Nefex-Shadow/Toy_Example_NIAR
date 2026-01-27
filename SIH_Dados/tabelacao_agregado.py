@@ -31,10 +31,10 @@ for a in arquivos:
     dfs.append(
         pd.read_csv("./Dados_Filtrados/" + a, index_col=0).reset_index(drop=True)
     )
-main_df = pd.concat(dfs)
-main_df["age_years"] = main_df.apply(calculo_idade, axis=1)
+main_df = pd.concat(dfs)  # Juncao de todos os arquivos em um Dataframe
 
-# print(main_df[["COD_IDADE", "IDADE", "age_years"]])
+# Novo atributo: idade calculada (vide funcao "calculo idade" para formula)
+main_df["age_years"] = main_df.apply(calculo_idade, axis=1)
 
 
 # Filtragem dos dados pelo Ano/Mes
@@ -60,8 +60,10 @@ dados_por_mes_e_hospital = []
 
 mes = 1
 ano = 2022
+
 # Loop de 2022/01 ate 2025/11, nao ha informacao de 2025/12 a diante
 while ano < 2025 or mes < 12:
+    # Impressao para acompanhamento do progresso do script
     print(ano, "/", mes)
 
     df = get_df_mes_ano(mes, ano)
@@ -165,6 +167,7 @@ while ano < 2025 or mes < 12:
                 / sizeh,  # J_missing_proc_share
             ]
         )
+        break
 
     mes += 1
     if mes > 12:

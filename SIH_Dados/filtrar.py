@@ -3,7 +3,8 @@ import os
 
 
 i = 0
-for arq in os.listdir("./Dados_csv/"):
+arquivos = os.listdir("./Dados_csv/")
+for arq in arquivos:
     i += 1
     df = pd.read_csv("./Dados_csv/" + arq)
     df = df[
@@ -29,6 +30,11 @@ for arq in os.listdir("./Dados_csv/"):
             "PROC_REA",
         ]
     ]
+
+    # Apenas diagnosticos de doencas respiratorias seram usadas.
+    # Diagnosticos que comecam com "J" (coincidentemente, tambem sao os unicos com J)
     df = df.loc[df["DIAG_PRINC"].str.contains("J")]
     df.to_csv("./Dados_Filtrados/" + arq)
-    print(i)
+
+    # Contagem usada para acompanhamento do processo, nada mais
+    print(i, "/", len(arquivos))
