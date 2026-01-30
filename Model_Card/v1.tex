@@ -1,0 +1,107 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+% Used in the explanation text
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks = true,
+    citecolor = {blue},
+    urlcolor = {blue},
+}
+
+% Used by the template
+\usepackage{setspace}
+\usepackage{changepage} % to adjust margins
+\usepackage[breakable]{tcolorbox}
+\usepackage{float} % for tables inside tcolorbox https://tex.stackexchange.com/a/274342
+\usepackage{enumitem}
+\usepackage{geometry}
+
+\geometry{vmargin=30pt,hmargin=30pt}
+\begin{document}
+
+
+% Each section is supposed to be brief, in the form of a bullet list.
+% This environment formats the lists in each model card section in a compact format to help
+% the card fit into the recommended "one to two pages".
+\newenvironment{mcsection}[1]
+    {%
+        \textbf{#1}
+
+        % Reduce margins to use the space more effectively and help fit in the recommended "one to two pages"
+        % Use the bullet list format as shown in the model card paper to increase readability
+        \begin{itemize}[leftmargin=*,topsep=0pt,itemsep=-1ex,partopsep=1ex,parsep=1ex,after=\vspace{\medskipamount}]
+    }
+    {%
+        \end{itemize}
+    }
+
+% Optional: reduce margins single line to fit in "one to two pages", as recommended
+\begin{singlespace}
+
+\tcbset{colback=white!10!white}
+\begin{tcolorbox}[title=\textbf{Model Card },
+    breakable, sharp corners, boxrule=0.7pt]
+
+% Change to a smaller, but still legible font size to help fit in the recommended "one to two pages"
+\small{
+
+
+\begin{mcsection}{Detalhes do Modelo}
+    \item Esse modelo (versão 1.0) foi desenvolvido por Luís Eduardo Limas Brito, 27/01/2005
+    \item Ele foi criado a fim de estabelecer uma base para aplicação de metodologias de IA responsável. Por isso, ele não contém nenhuma implementação que siga as dimensões estabelecidas pela IAR.
+    \item Modelo de Predição, com o objetivo de estimar o número de internações por doenças respiratórias (CID = J...) em um hospital para um dado mês.
+\end{mcsection}
+
+\begin{mcsection}{Uso pretendido}
+    \item O modelo pode ser usado por hospitais para analisar estimativas de quantas internações podem-se esperar para o próximo mês.
+\end{mcsection}
+
+\begin{mcsection}{Fatores}
+    \item Factors 1...
+\end{mcsection}
+
+\begin{mcsection}{Metrics}
+    \item Metrics 1....
+\end{mcsection}
+
+\begin{mcsection}{Evaluation Data}
+    \item Evaluation data 1...
+\end{mcsection}
+
+\begin{mcsection}{Training Data}
+    \item Training data 1...
+\end{mcsection}
+
+\pagebreak
+
+\begin{mcsection}{Ethical Considerations}
+    \item Ethical considerations 1....
+\end{mcsection}
+
+\begin{mcsection}{Caveats and Recommendations}
+    \item Caveats and recommendations 1...
+\end{mcsection}
+
+\textbf{Quantitative Analyses}
+
+% Sample table inside tcolorbox
+\begin{table}[H]
+\centering
+\small{
+\begin{tabular}{lr}
+Measurement 1       & 0.751  \\
+Measurement 2       & 0.762 \\
+Measurement 3       & 0.773 \\
+Measurement 4       & 0.784 \\
+Measurement average & 0.768  \\ \hline
+\textbf{Model measurement}  & \textbf{0.791} \\ \hline
+\end{tabular} } \\
+\caption[Short caption used in list of tables.]{\small{Longer caption to explain what the measurements are.}}
+\end{table}
+
+} % end font size change
+\end{tcolorbox}
+\end{singlespace}
+
+\end{document}

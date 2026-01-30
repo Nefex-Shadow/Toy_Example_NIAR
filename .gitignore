@@ -4,3 +4,17 @@ SIH_Dados/.ipynb_checkpoints/
 venv/
 
 .ipynb_checkpoints/
+SIH_Dados/Dados
+SIH_Dados/Dados_Filtrados
+SIH_Dados/Dados_csv
+SIH_Dados/Dados_dbf
+SIH_Dados/IT_SIHSUS_1603.pdf
+SIH_Dados/TAB_SIH
+SIH_Dados/Tabela_Agregada.csv
+SIH_Dados/Tabela_lag_Final.csv
+Model_Card/v1.synctex.gz
+Model_Card/v1.out
+Model_Card/v1.log
+Model_Card/v1.fls
+Model_Card/v1.fdb_latexmk
+Model_Card/v1.aux
