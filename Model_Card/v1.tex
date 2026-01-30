@@ -48,42 +48,39 @@
 
 
 \begin{mcsection}{Detalhes do Modelo}
-    \item Esse modelo (versão 1.0) foi desenvolvido por Luís Eduardo Limas Brito, 27/01/2005
+    \item Esse modelo (versão 1.0) foi desenvolvido por Luís Eduardo Limas Brito, 27/01/2005.
     \item Ele foi criado a fim de estabelecer uma base para aplicação de metodologias de IA responsável. Por isso, ele não contém nenhuma implementação que siga as dimensões estabelecidas pela IAR.
     \item Modelo de Predição, com o objetivo de estimar o número de internações por doenças respiratórias (CID = J...) em um hospital para um dado mês.
+    \item Há implementação de dois modelos, a fim de comparação da qualidade dos resultados. Regressão linear (implementado usando "scikit-learn") e LightGBM (modelo criado Microsoft), usando "early-stopping".
 \end{mcsection}
 
 \begin{mcsection}{Uso pretendido}
-    \item O modelo pode ser usado por hospitais para analisar estimativas de quantas internações podem-se esperar para o próximo mês.
+    \item O modelo pode ser usado por hospitais para analisar estimativas de quantas internações podem-se esperar para o próximo mês, a fim de assistir no processo de escolha dos gastos e aquisição de recursos.
 \end{mcsection}
 
 \begin{mcsection}{Fatores}
-    \item Factors 1...
+    \item Devido à quantidade de atributos, é provável que o usuário não terá acesso a todos os dados necessários. Por isso, a ausência de alguns (valores nulos) podem alterar o resultado obtido.
 \end{mcsection}
 
-\begin{mcsection}{Metrics}
+
+\begin{mcsection}{Dados de Treinamento}
+    \item O modelo foi treinado nos dados do DataSUS. Especificamente, os do tipo SIH (Internações Hospitalares), com arquivos reduzidos (começam com RD), de todos os estados, dos anos de 2022 a 2024/06.
+    \item Pré Processamento: os dados foram agrupados por hospital e mês/ano, contabilizando o total e calculando dados como média e razão de algumas colunas. Cada atributo usado para treinamento é uma defasagem temporal dos dados calculados no passo anterior (dados dos meses passados).
+\end{mcsection}
+
+\begin{mcsection}{Dados de Avaliação}
+    \item Não foi usado dados extras para avaliação. Para o LightGBM, foi usado dados para validação (dados de 2024/7 até 2024/12), seguindo o mesmo pré processamento dos dados de treinamento.
+\end{mcsection}
+
+\begin{mcsection}{Métricas}
     \item Metrics 1....
 \end{mcsection}
 
-\begin{mcsection}{Evaluation Data}
-    \item Evaluation data 1...
-\end{mcsection}
-
-\begin{mcsection}{Training Data}
-    \item Training data 1...
-\end{mcsection}
-
-\pagebreak
-
-\begin{mcsection}{Ethical Considerations}
-    \item Ethical considerations 1....
-\end{mcsection}
-
-\begin{mcsection}{Caveats and Recommendations}
+\begin{mcsection}{Avisos e Recomendações}
     \item Caveats and recommendations 1...
 \end{mcsection}
 
-\textbf{Quantitative Analyses}
+\textbf{Análise Quantitativa}
 
 % Sample table inside tcolorbox
 \begin{table}[H]
@@ -97,7 +94,7 @@ Measurement 4       & 0.784 \\
 Measurement average & 0.768  \\ \hline
 \textbf{Model measurement}  & \textbf{0.791} \\ \hline
 \end{tabular} } \\
-\caption[Short caption used in list of tables.]{\small{Longer caption to explain what the measurements are.}}
+\caption[Short caption used in list of tables.]{\small{Métricas por modelo}}
 \end{table}
 
 } % end font size change
