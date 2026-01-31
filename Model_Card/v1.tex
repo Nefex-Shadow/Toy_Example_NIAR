@@ -1,6 +1,7 @@
 \documentclass{article}
 \usepackage[utf8]{inputenc}
 
+
 % Used in the explanation text
 \usepackage{hyperref}
 \hypersetup{
@@ -8,6 +9,7 @@
     citecolor = {blue},
     urlcolor = {blue},
 }
+
 
 % Used by the template
 \usepackage{setspace}
@@ -48,7 +50,7 @@
 
 
 \begin{mcsection}{Detalhes do Modelo}
-    \item Esse modelo (versão 1.0) foi desenvolvido por Luís Eduardo Limas Brito, 27/01/2005.
+    \item Esse modelo (versão 1.0) foi desenvolvido por Luís Eduardo Limas Brito, 27/01/2025.
     \item Ele foi criado a fim de estabelecer uma base para aplicação de metodologias de IA responsável. Por isso, ele não contém nenhuma implementação que siga as dimensões estabelecidas pela IAR.
     \item Modelo de Predição, com o objetivo de estimar o número de internações por doenças respiratórias (CID = J...) em um hospital para um dado mês.
     \item Há implementação de dois modelos, a fim de comparação da qualidade dos resultados. Regressão linear (implementado usando "scikit-learn") e LightGBM (modelo criado Microsoft), usando "early-stopping".
@@ -66,23 +68,26 @@
 \begin{mcsection}{Dados de Treinamento}
     \item O modelo foi treinado nos dados do DataSUS. Especificamente, os do tipo SIH (Internações Hospitalares), com arquivos reduzidos (começam com RD), de todos os estados, dos anos de 2022 a 2024/06.
     \item Pré Processamento: os dados foram agrupados por hospital e mês/ano, contabilizando o total e calculando dados como média e razão de algumas colunas. Cada atributo usado para treinamento é uma defasagem temporal dos dados calculados no passo anterior (dados dos meses passados).
+    \item Hospitais com uma média mensal abaixo de 5 internações foram reitradas.
 \end{mcsection}
 
 \begin{mcsection}{Dados de Avaliação}
-    \item Não foi usado dados extras para avaliação. Para o LightGBM, foi usado dados para validação (dados de 2024/7 até 2024/12), seguindo o mesmo pré processamento dos dados de treinamento.
+    \item Para o LightGBM, foi usado dados para validação (dados de 2024/7 até 2024/12 do DataSUS), seguindo o mesmo pré processamento dos dados de treinamento.
+    \item Para realização de testes, foram usados os dados de 2025/01 até 2025/11 (com exceção dos estados do Acre e Roraima - "AC" e "RR" - que não estavam disponíveis ainda). Também passaram pelo mesmo processo citado acima.
 \end{mcsection}
 
 \begin{mcsection}{Métricas}
-    \item Os testes foram feitos usando os dados de 2025/01 até 2025/11 (com exceção dos estados do Acre e Roraima - "AC" e "RR" - que não estavam disponíveis ainda).
-    \item Erro Médio Absoluto (MAE): métrica para análise dos erros como valor total, sem valorizar algum tipo especial de erro. Valores altos indicam uma mistura entre alta quantidade de erros ou erros graves.
-    \item Raiz do Erro Quadrático Médio (RMSE): métrica para análise de erros, valorizando erros graves. Útil para verificação da consistência do modelo, penalizando erros graves.
-    \item Erro Médio Absoluto Simétrico Percentual (SMAPE): métrica para análise dos erros como valor em porcentagem, sem valorizar algum tipo especial de erro. Valores altos indicam uma alta taxa de erro.
+    \item Erro Médio Absoluto (MAE): métrica para análise dos erros em valor total, sem valorizar algum tipo especial de erro. Valores altos indicam uma mistura entre alta quantidade de erros ou erros graves.
+    \item Raiz do Erro Quadrático Médio (RMSE): métrica para análise de erros, valorizando erros graves. Útil para verificação da consistência do modelo, penalizando grandes disparidades entre valores reais e previstos.
+    \item Erro Médio Absoluto Simétrico Percentual (SMAPE): métrica para análise dos erros em valor percentual, sem valorizar algum tipo especial de erro. Valores altos indicam uma alta taxa de erro.
 \end{mcsection}
 
 \begin{mcsection}{Avisos e Recomendações}
     \item O modelo usa como atributo o CNES do hospital. Isso significa que ele terá uma melhor chance de acerto se o CNES providenciado for igual a um já visto antes. Por isso, esse modelo é recomendado para hospitais já cadastrados no SUS (de tamanho maior, pois hospitais com poucos casos de internações foram filtrados para fora do modelo).
+    \item Decisões tomadas pelo modelo devem sempre ser acompanhadas por um profissional, uma vez que uma previsão nunca será sempre correta. Além disso previsões que erram "para baixo" podem ser perigosas, pois apontam que precisa-se de menos recursos que será necessário, podendo levar a complicações e mortes para pacientes.
 \end{mcsection}
 
+\centering
 \textbf{Análise Quantitativa}
 
 % Sample table inside tcolorbox
@@ -90,7 +95,7 @@
 \centering
 \small{
 \begin{tabular}{lrr}
-\textbf{Métrica} & \textbf{Modelo Base (Reg Lin)} & \textbf{Modelo LightGBM}\\ \hline
+\textbf{Métrica} & \textbf{Base (Reg. Lin.)} & \textbf{LightGBM}\\ \hline
 MAE & 13.902 & 12.358\\
 RMSE & 598.748 & 434.361\\
 SMAPE & 51.476 & 45.438\\ \hline
