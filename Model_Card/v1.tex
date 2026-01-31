@@ -59,7 +59,7 @@
 \end{mcsection}
 
 \begin{mcsection}{Fatores}
-    \item Devido à quantidade de atributos, é provável que o usuário não terá acesso a todos os dados necessários. Por isso, a ausência de alguns (valores nulos) podem alterar o resultado obtido.
+    \item Devido à quantidade de atributos, é provável que o usuário não terá acesso a todos os dados necessários. Por isso, a ausência de alguns (valores nulos) podem afetar o resultado obtido.
 \end{mcsection}
 
 
@@ -73,11 +73,14 @@
 \end{mcsection}
 
 \begin{mcsection}{Métricas}
-    \item Metrics 1....
+    \item Os testes foram feitos usando os dados de 2025/01 até 2025/11 (com exceção dos estados do Acre e Roraima - "AC" e "RR" - que não estavam disponíveis ainda).
+    \item Erro Médio Absoluto (MAE): métrica para análise dos erros como valor total, sem valorizar algum tipo especial de erro. Valores altos indicam uma mistura entre alta quantidade de erros ou erros graves.
+    \item Raiz do Erro Quadrático Médio (RMSE): métrica para análise de erros, valorizando erros graves. Útil para verificação da consistência do modelo, penalizando erros graves.
+    \item Erro Médio Absoluto Simétrico Percentual (SMAPE): métrica para análise dos erros como valor em porcentagem, sem valorizar algum tipo especial de erro. Valores altos indicam uma alta taxa de erro.
 \end{mcsection}
 
 \begin{mcsection}{Avisos e Recomendações}
-    \item Caveats and recommendations 1...
+    \item O modelo usa como atributo o CNES do hospital. Isso significa que ele terá uma melhor chance de acerto se o CNES providenciado for igual a um já visto antes. Por isso, esse modelo é recomendado para hospitais já cadastrados no SUS (de tamanho maior, pois hospitais com poucos casos de internações foram filtrados para fora do modelo).
 \end{mcsection}
 
 \textbf{Análise Quantitativa}
@@ -86,13 +89,11 @@
 \begin{table}[H]
 \centering
 \small{
-\begin{tabular}{lr}
-Measurement 1       & 0.751  \\
-Measurement 2       & 0.762 \\
-Measurement 3       & 0.773 \\
-Measurement 4       & 0.784 \\
-Measurement average & 0.768  \\ \hline
-\textbf{Model measurement}  & \textbf{0.791} \\ \hline
+\begin{tabular}{lrr}
+\textbf{Métrica} & \textbf{Modelo Base (Reg Lin)} & \textbf{Modelo LightGBM}\\ \hline
+MAE & 13.902 & 12.358\\
+RMSE & 598.748 & 434.361\\
+SMAPE & 51.476 & 45.438\\ \hline
 \end{tabular} } \\
 \caption[Short caption used in list of tables.]{\small{Métricas por modelo}}
 \end{table}
