@@ -70,14 +70,12 @@ to include relevant information, considerations, and links to table(s) with
 more detailed breakdowns.) -->
 Category | Data
 --- | ---
-Size of Dataset | 1.9 MB
-Number of Instances | 3977
-Number of Fields | 143
-Labeled Classes | 9
-Number of Labels | 370
-Average Labeles Per Instance | 41.1
+Size of Dataset | 128.6 MB
+Number of Instances | 161585
+Number of Fields | 94
+Labeled Classes | 0
 
-**Above:** Informações de RDAC2201.csv.
+**Above:** Informações de Tabela_lag_Final.csv.
 
 #### Content Description
 <!-- scope: microscope -->
@@ -85,6 +83,29 @@ Average Labeles Per Instance | 41.1
 Dados criados a partir dos dados disponibilizados pelo DataSUS. Eles foram passados por uma etapa de pré processamento, onde foram agrupadas em valores totais, médias ou razões. Além disso, por ser um modelo de previsão, cada linha contém dados de meses passados.
 
 **Additional Notes:** Os dados foram agrupados por hospitais, em um dado mês/ano.
+
+#### Descriptive Statistics
+<!-- width: full -->
+<!-- info: Provide basic descriptive statistics for each field.
+
+Use additional notes to capture any other relevant information or
+considerations.
+
+Usage Note: Some statistics will be relevant for numeric data, for not for
+strings. -->
+
+Statistic | J_count | J_dias_perm_mean_lag1 | J_bucket_entropy_lag2 | J_val_tot_mean_lag3 | J00_06_share_lag6 | Field Name
+--- | --- | --- | --- | --- | --- | ---
+count | 161584.000000 | 156500.000000 | 152801.000000 | 149152.000000 | 138358.000000 | 117347.000000
+mean | 31.296601 | 5.606571 | 0.549438 | 1211.331608 | 0.033241 | 0.819023
+std | 35.106042 | 3.825802 | 0.359922 | 1489.730747 | 0.087863 | 0.225511
+min | 1.000000 | 0.000000 | 0.000000 | 40.380000 | 0.000000 | 0.056818
+25% | 10.000000 | 3.333333 | 0.295439 | 541.308549 | 0.000000 | 0.681818
+50% | 21.000000 | 4.769231 | 0.585953 | 599.880833 | 0.000000 | 0.923077
+75% | 40.000000 | 6.888889 | 0.808270 | 1319.003567 | 0.027027 | 1.000000
+max | 546.000000 | 341.000000 | 1.386294 | 64671.010000 | 1.000000 | 1.000000
+
+**Above:** Tabela contendo exemplos de atributos usados para o treinar o modelo final.
 
 ### Sensitivity of Data
 
@@ -96,20 +117,6 @@ Dados criados a partir dos dados disponibilizados pelo DataSUS. Eles foram passa
 - User Activity Data
 - Identifiable Data
 - Health Data
-
-#### Field(s) with Sensitive Data
-<!-- scope: periscope -->
-<!-- info: List fields in the dataset that contain S/PII, and specify if their
-collection was intentional or unintentional.
-
-Use additional notes to capture any other relevant information or
-considerations. -->
-
-Field Name | Description
---- | ---
-IDADE | Idade do indivíduo
-SEX | Sexo do paciente
-CEP | Código de Endereçamento Postal
 
 #### Risk Type(s)
 <!-- scope: telescope -->
@@ -128,16 +135,13 @@ the dataset: -->
 #### Maintenance Status
 <!-- scope: telescope -->
 <!-- info: Select **one:** -->
-**Actively Maintained** - No new versions will be made
-available, but this dataset will
-be actively maintained,
-including but not limited to
-updates to the data.
+**Limited Maintenance** - The data will not be updated,
+but any technical issues will be addressed.
 
 #### Version Details
 <!-- scope: periscope -->
 <!-- info: Provide details about **this** version of the dataset: -->
-**Current Version:** Unknown
+**Current Version:** 1.0
 
 **Last Updated:** 01/2026
 
@@ -149,81 +153,13 @@ updates to the data.
 
 Use additional notes to capture any other relevant information or
 considerations. -->
-**Additional Notes:** Dados mantidos pelo DataSUS.
-
-## Example of Data Points
+**Additional Notes:** Novos modelos serão criados usando o mesmo dataset,
+a fim de comparação e análises.
 
 #### Primary Data Modality
 <!-- scope: telescope -->
 <!-- info: Select **one**: -->
 - Time Series
-
-#### Data Fields
-<!-- scope: microscope -->
-<!-- info: List the fields in data points and their descriptions.
-
-(Usage Note: Describe each field in a data point. Optionally use this to show
-the example.) -->
-
-Field Name | Field Value | Description
---- | --- | ---
-Field Name | Field Value | Description
-Field Name | Field Value | Description
-Field Name | Field Value | Description
-
-**Above:** Provide a caption for the above table or visualization if used.
-
-**Additional Notes:** Add here
-
-#### Typical Data Point
-<!-- width: half -->
-<!-- info: Provide an example of a typical data point and describe what makes
-it typical.
-
-**Use additional notes to capture any other relevant information or
-considerations.** -->
-Summarize here. Include any criteria for typicality of data point.
-
-```
-{'q_id': '8houtx',
-  'title': 'Why does water heated to room temperature feel colder than the air around it?',
-  'selftext': '',
-  'document': '',
-  'subreddit': 'explainlikeimfive',
-  'answers': {'a_id': ['dylcnfk', 'dylcj49'],
-  'text': ["Water transfers heat more efficiently than air. When something feels cold it's because heat is being transferred from your skin to whatever you're touching. ... Get out of the water and have a breeze blow on you while you're wet, all of the water starts evaporating, pulling even more heat from you."],
-  'score': [5, 2]},
-  'title_urls': {'url': []},
-  'selftext_urls': {'url': []},
-  'answers_urls': {'url': []}}
-```
-
-**Additional Notes:** Add here
-
-#### Atypical Data Point
-<!-- width: half -->
-<!-- info: Provide an example of an outlier data point and describe what makes
-it atypical.
-
-**Use additional notes to capture any other relevant information or
-considerations.** -->
-Summarize here. Include any criteria for atypicality of data point.
-
-```
-{'q_id': '8houtx',
-  'title': 'Why does water heated to room temperature feel colder than the air around it?',
-  'selftext': '',
-  'document': '',
-  'subreddit': 'explainlikeimfive',
-  'answers': {'a_id': ['dylcnfk', 'dylcj49'],
-  'text': ["Water transfers heat more efficiently than air. When something feels cold it's because heat is being transferred from your skin to whatever you're touching. ... Get out of the water and have a breeze blow on you while you're wet, all of the water starts evaporating, pulling even more heat from you."],
-  'score': [5, 2]},
-  'title_urls': {'url': []},
-  'selftext_urls': {'url': []},
-  'answers_urls': {'url': []}}
-```
-
-**Additional Notes:** Add here
 
 ## Motivations & Intentions
 
@@ -232,10 +168,7 @@ Summarize here. Include any criteria for atypicality of data point.
 #### Purpose(s)
 <!-- scope: telescope -->
 <!-- info: Select **one**: -->
-- Monitoring
 - Research
-- Production
-- Others (please specify)
 
 #### Domain(s) of Application
 <!-- scope: periscope -->
@@ -243,7 +176,7 @@ Summarize here. Include any criteria for atypicality of data point.
 been designed for:<br><br>(Usage Note: Use comma-separated keywords.) -->
 For example: `Machine Learning`, `Computer Vision`, `Object Detection`.
 
-`keyword`, `keyword`, `keyword`
+`Machine Learning`, `Time-Series`
 
 #### Motivating Factor(s)
 <!-- scope: microscope -->
@@ -251,23 +184,15 @@ For example: `Machine Learning`, `Computer Vision`, `Object Detection`.
 
 (Usage Note: use this to describe the problem space and corresponding
 motivations for the dataset.) -->
-For example:
 
-- Bringing demographic diversity to imagery training data for object-detection models
-- Encouraging academics to take on second-order challenges of cultural representation in object detection
-
-Summarize motivation here. Include links where relevant.
+Usar dados reais para implementação de um modelo de previsão.
 
 ### Intended Use
 
 #### Dataset Use(s)
 <!-- scope: telescope -->
 <!-- info: Select **one**: -->
-- Safe for production use
 - Safe for research use
-- Conditional use - some unsafe applications
-- Only approved use
-- Others (please specify)
 
 #### Suitable Use Case(s)
 <!-- scope: periscope -->
@@ -275,13 +200,11 @@ Summarize motivation here. Include links where relevant.
 
 Use additional notes to capture any specific patterns that readers should
 look out for, or other relevant information or considerations. -->
-**Suitable Use Case:** Summarize here. Include links where necessary.
+**Suitable Use Case:** Modelo de previsão.
 
-**Suitable Use Case:** Summarize here. Include links where necessary.
+**Suitable Use Case:** Estudos de histórico de hospitais.
 
-**Suitable Use Case:** Summarize here. Include links where necessary.
-
-**Additional Notes:** Add here
+**Additional Notes:** Apenas hospitais cadastrados no dataSUS estão presentes.
 
 #### Unsuitable Use Case(s)
 <!-- scope: microscope -->
@@ -289,210 +212,17 @@ look out for, or other relevant information or considerations. -->
 
 Use additional notes to capture any specific patterns that readers should look
 out for, or other relevant information or considerations. -->
-**Unsuitable Use Case:** Summarize here. Include links where necessary.
+**Unsuitable Use Case:** Estudos em cima de casos específicos de um paciente individual.
 
-**Unsuitable Use Case:** Summarize here. Include links where necessary.
+**Additional Notes:** O dataset contém apenas informações agregadas,
+sem conter casos isolados.
 
-**Unsuitable Use Case:** Summarize here. Include links where necessary.
-
-**Additional Notes:** Add here
-
-#### Research and Problem Space(s)
-<!-- scope: periscope -->
-<!-- info: Provide a description of the specific problem space that this
-dataset intends to address. -->
-Summarize here. Include any specific research questions.
-
-#### Citation Guidelines
-<!-- scope: microscope -->
-<!-- info: Provide guidelines and steps for citing this dataset in research
-and/or production.
-
-Use additional notes to capture any specific patterns that readers should look
-out for, or other relevant information or considerations. -->
-**Guidelines & Steps:** Summarize here. Include links where necessary.
-
-**BiBTeX:**
-
-```
-@article{kuznetsova2020open,
-  title={The open images dataset v4},
-  author={Kuznetsova, Alina and Rom, Hassan and Alldrin, and others},
-  journal={International Journal of Computer Vision},
-  volume={128},
-  number={7},
-  pages={1956--1981},
-  year={2020},
-  publisher={Springer}
-}
-```
-
-**Additional Notes:** Add here
-
-## Access, Rentention, & Wipeout
-
-### Access
+## Access
 
 #### Access Type
 <!-- scope: telescope -->
 <!-- info: Select **one**: -->
-- Internal - Unrestricted
-- Internal - Restricted
 - External - Open Access
-- Others (please specify)
-
-#### Documentation Link(s)
-<!-- scope: periscope -->
-<!-- info: Provide links that describe documentation to access this
-dataset: -->
-- Dataset Website URL
-- GitHub URL
-
-#### Prerequisite(s)
-<!-- scope: microscope -->
-<!-- info: Please describe any required training or prerequisites to access
-this dataset. -->
-For example:
-
-This dataset requires membership in [specific] database groups:
-
-- Complete the [Mandatory Training]
-- Read [Data Usage Policy]
-- Initiate a Data Requesting by filing
-
-#### Policy Link(s)
-<!-- scope: periscope -->
-<!-- info: Provide a link to the access policy: -->
-- Direct download URL
-- Other repository URL
-
-Code to download data:
-
-```
-...
-```
-
-#### Access Control List(s)
-<!-- scope: microscope -->
-<!-- info: List and summarize any access control lists associated with this
-dataset. Include links where necessary.
-
-Use additional notes to capture any other information relevant to accessing
-the dataset. -->
-**Access Control List:** Write summary and notes here.
-
-**Access Control List:** Write summary and notes here.
-
-**Access Control List:** Write summary and notes here.
-
-**Additional Notes:** Add here
-
-### Retention
-
-#### Duration
-<!-- scope: periscope -->
-<!-- info: Specify the duration for which this dataset can be retained: -->
-Specify duration in days, months, or years.
-
-#### Policy Summary
-<!-- scope: microscope -->
-<!-- info: Summarize the retention policy for this dataset. -->
-**Retention Plan ID:** Write here
-
-**Summary:** Write summary and notes here
-
-#### Process Guide
-<!-- scope: periscope -->
-<!-- info: Summarize any requirements and related steps to retain the dataset.
-
-Use additional notes to capture any other relevant information or
-considerations. -->
-For example:
-
-This dataset compiles with [standard policy guidelines].
-
-**Additional Notes:** Add here
-
-#### Exception(s) and Exemption(s)
-<!-- scope: microscope -->
-<!-- info: Summarize any exceptions and related steps to retain the dataset.
-Include links where necessary.
-
-Use additional notes to capture any other relevant information or
-considerations. -->
-**Exemption Code:** `ANONYMOUS_DATA` /
-`EMPLOYEE_DATA` / `PUBLIC_DATA` /
-`INTERNAL_BUSINESS_DATA` /
-`SIMULATED_TEST_DATA`
-
-**Summary:** Write summary and notes here.
-
-**Additional Notes:** Add here
-
-### Wipeout and Deletion
-
-#### Duration
-<!-- scope: periscope -->
-<!-- info: Specify the duration after which this dataset should be deleted or
-wiped out: -->
-Specify duration in days, months, or years.
-
-#### Deletion Event Summary
-<!-- scope: microscope -->
-<!-- info: Summarize the sequence of events and allowable processing for data
-deletion.
-
-Use additional notes to capture any other relevant information or
-considerations. -->
-**Sequence of deletion and processing events:**
-
-- Summarize first event here
-- Summarize second event here
-- Summarize third event here
-
-**Additional Notes:** Add here
-
-#### Acceptable Means of Deletion
-<!-- scope: periscope -->
-<!-- info: List the acceptable means of deletion: -->
-- Write acceptable means of deletion
-- Write acceptable means of deletion
-- Write acceptable means of deletion
-
-#### Post-Deletion Obligations
-<!-- scope: microscope -->
-<!-- info: Summarize the sequence of obligations after a deletion event.
-
-**Use additional notes to capture any other relevant information or
-considerations.** -->
-**Sequence of post-deletion obligations:**
-
-- Summarize first obligation here
-- Summarize second obligation here
-- Summarize third obligation here
-
-**Additional Notes:** Add here
-
-#### Operational Requirement(s)
-<!-- scope: periscope -->
-<!-- info: List any wipeout integration operational requirements: -->
-**Wipeout Integration Operational Requirements:**
-
-- Write first requirement here
-- Write second requirement here
-- Write third requirement here
-
-#### Exceptions and Exemptions
-<!-- scope: microscope -->
-<!-- info: Summarize any exceptions and related steps to a deletion event.
-
-**Use additional notes to capture any other relevant information or
-considerations.** -->
-**Policy Exception bug:** [bug]
-
-**Summary:** Write summary and notes here
-
-**Additional Notes:** Add here
 
 ## Provenance
 
@@ -501,17 +231,7 @@ considerations.** -->
 #### Method(s) Used
 <!-- scope: telescope -->
 <!-- info: Select **all applicable** methods used to collect data: -->
-- API
-- Artificially Generated
-- Crowdsourced - Paid
-- Crowdsourced - Volunteer
-- Vendor Collection Efforts
-- Scraped or Crawled
-- Survey, forms, or polls
 - Taken from other existing datasets
-- Unknown
-- To be determined
-- Others (please specify)
 
 #### Methodology Detail(s)
 <!-- scope: periscope -->
@@ -524,51 +244,23 @@ considerations.
 type.) -->
 **Collection Type**
 
-**Source:** Describe here. Include links where available.
+**Source:** Conexão ftp disponibilizado pelo dataSUS.
 
-**Platform:** [Platform Name], Describe platform here. Include links where relevant.
+**Link:** ftp.datasus.gov.br
 
-**Is this source considered sensitive or high-risk?** [Yes/No]
-
-**Dates of Collection:** [MMM YYYY - MMM YYYY]
+**Dates of Collection:** [01 2022 - 11 2025]
 
 **Primary modality of collection data:**
 
-*Usage Note: Select one for this collection type.*
-
-- Image Data
-- Text Data
 - Tabular Data
-- Audio Data
-- Video Data
-- Time Series
-- Graph Data
-- Geospatial Data
-- Unknown
-- Multimodal (please specify)
-- Others (please specify)
 
 **Update Frequency for collected data:**
 
 *Usage Note: Select one for this collection type.*
 
-- Yearly
-- Quarterly
 - Monthly
-- Biweekly
-- Weekly
-- Daily
-- Hourly
-- Static
-- Others (please specify)
 
-**Additional Links for this collection:**
-
-- [Access Policy]
-- [Wipeout Policy]
-- [Retention Policy]
-
-**Additional Notes:** Add here
+**Additional Notes:**
 
 #### Source Description(s)
 <!-- scope: microscope -->
@@ -576,22 +268,17 @@ type.) -->
 
 Use additional notes to capture any other relevant information or
 considerations. -->
-- **Source:** Describe here. Include links, data examples, metrics, visualizations where relevant.
-- **Source:** Describe here. Include links, data examples, metrics, visualizations where relevant.
-- **Source:** Describe here. Include links, data examples, metrics, visualizations where relevant.
-
-**Additional Notes:** Add here
+- Os arquivos usados foram encontrados dentro da pasta
+"/dissemin/publicos/SIHSUS/200801_/Dados/".
+- Apenas arquivos que começam com RD foram usados.
+- Foram usados arquivos de 2022/01 até 2025/11.
+- Exceção: Os arquivos RDAC2511.dbc e RDRR2511.dbc não estavam disponíveis
+quando os dados foram coletados.
 
 #### Collection Cadence
 <!-- scope: telescope -->
 <!-- info: Select **all applicable**: -->
 **Static:** Data was collected once from single or multiple sources.
-
-**Streamed:** Data is continuously acquired from single or multiple sources.
-
-**Dynamic:** Data is updated regularly from single or multiple sources.
-
-**Others:** Please specify
 
 #### Data Integration
 <!-- scope: periscope -->
