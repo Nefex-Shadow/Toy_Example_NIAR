@@ -1,0 +1,136 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+
+% Esse Template é uma adaptação do modelo feito por Christian Garbin:
+% https://www.overleaf.com/latex/templates/model-card-template/fjmvzbbbxmwx
+% Licenciada pelo Creative Commons CC BY 4.0
+
+% Poucas adaptações foram feitas. Foram modificadas as disposições das tabelas,
+% traduziu-se os textos e foi retirado o texto introdutório,
+% a fim de facilitar o uso desse template.
+
+% Para saber mais sobre o uso de Model Cards, segue-se o artigo que propôs essa ferramenta:
+% https://arxiv.org/abs/1810.03993
+
+
+% Usado no Template
+\usepackage{setspace}
+\usepackage{subcaption}
+\usepackage{changepage} % Ajuste das margens
+\usepackage[breakable]{tcolorbox}
+\usepackage{float} % Para as tabelas de tcolorbox https://tex.stackexchange.com/a/274342
+\usepackage{enumitem}
+\usepackage{geometry}
+
+\geometry{vmargin=30pt,hmargin=30pt}
+\begin{document}
+
+
+% Cada seção deve ser breve, em formato de lista
+% Esse template faz a formatação das listas de foma compacta para facilitar manter
+% o model card dentro da recomendação de uma a duas páginas.
+\newenvironment{mcsection}[1]
+    {%
+        \textbf{#1}
+
+        % Redução das margens para uso melhor do espaço
+        \begin{itemize}[leftmargin=*,topsep=0pt,itemsep=-1ex,partopsep=1ex,parsep=1ex,after=\vspace{\medskipamount}]
+    }
+    {%
+        \end{itemize}
+    }
+
+\begin{singlespace}
+
+\tcbset{colback=white!10!white}
+
+% Título do model card, alterar aqui
+\begin{tcolorbox}[title=\textbf{Model Card - \textit{Model Name}},
+    breakable, sharp corners, boxrule=0.7pt]
+
+% Small: reduz tamanho da fonte para uma pequena, mas legível.
+\small{
+
+
+\begin{mcsection}{Detalhes do Modelo}
+    \item Desenvolvedor, data
+    \item Tipo de modelo, versão
+    \item Motivações, objetivos
+    \item Descrição
+\end{mcsection}
+
+\begin{mcsection}{Uso pretendido}
+    \item Casos onde o modelo pode ser aplicado
+    \item Casos onde o modelo não deve ser aplicado
+\end{mcsection}
+
+\begin{mcsection}{Fatores}
+    \item Fatores que podem afetar a performance do modelo.
+\end{mcsection}
+
+
+\begin{mcsection}{Dados de Treinamento}
+    \item Descrição dos dataset usado para treinamento
+    \item Sumário do processamento dos dados (se houver)
+\end{mcsection}
+
+\begin{mcsection}{Dados de Avaliação}
+    \item Descrição dos dataset usado para avaliação
+    \item Sumário do processamento dos dados (se houver)
+\end{mcsection}
+
+\begin{mcsection}{Métricas}
+    \item Métrica 1: Descrição
+    \item Métrica 2: Descrição
+    \item Métrica 3: Descrição
+\end{mcsection}
+
+\begin{mcsection}{Avisos e Recomendações}
+    \item Avisos 1
+    \item Avisos 2
+    \item Recomendações 1
+    \item Recomendações 2
+\end{mcsection}
+
+\centering
+\textbf{Análise Quantitativa}
+\vspace{5pt}
+% Para retirar ou duplicar uma tabela,
+% selecione desde begin{minipage} até end{minipage}.
+
+\begin{minipage}{.25\textwidth}
+\centering
+\begin{tabular}{lrr}
+\textbf{Métrica} & \textbf{Modelo}\\ \hline
+Métrica 1 & 1234.5\\
+Métrica 2 & 1234.5\\
+Métrica 3 & 1234.5\\ \hline
+\end{tabular}
+\captionof{table}{Avaliação 1}
+\end{minipage}
+\begin{minipage}{.25\textwidth}
+\centering
+\begin{tabular}{lrr}
+\textbf{Métrica} & \textbf{Modelo}\\ \hline
+Métrica 1 & 1234.5\\
+Métrica 2 & 1234.5\\
+Métrica 3 & 1234.5\\ \hline
+\end{tabular}
+\captionof{table}{Avaliação 2}
+\end{minipage}
+\begin{minipage}{.25\textwidth}
+\centering
+\begin{tabular}{lrr}
+\textbf{Métrica} & \textbf{Modelo}\\ \hline
+Métrica 1 & 1234.5\\
+Métrica 2 & 1234.5\\
+Métrica 3 & 1234.5\\ \hline
+\end{tabular}
+\captionof{table}{Avaliação 3}
+\end{minipage}
+}
+\end{tcolorbox}
+\end{singlespace}
+
+\end{document}
