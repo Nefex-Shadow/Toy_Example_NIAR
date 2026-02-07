@@ -3,13 +3,17 @@ import pandas as pd
 import os
 
 
+def get_region(arq):
+    return arq[2:4]
+
+
 def calculo_idade(linha):
-    if linha["COD_IDADE"] == 1:
+    if linha["COD_IDADE"] == 4:
         return linha["IDADE"]
     if linha["COD_IDADE"] == 2:
-        return linha["IDADE"] / 12
+        return 0
     if linha["COD_IDADE"] == 3:
-        return linha["IDADE"] / 365
+        return 0
     return np.nan
 
 
@@ -28,9 +32,9 @@ def calculo_entropia(counts):
 arquivos = os.listdir("./Dados_Filtrados/")
 dfs = []
 for a in arquivos:
-    dfs.append(
-        pd.read_csv("./Dados_Filtrados/" + a, index_col=0).reset_index(drop=True)
-    )
+    df = pd.read_csv("./Dados_Filtrados/" + a, index_col=0).reset_index(drop=True)
+    df["region"] = get_region(a)
+    dfs.append(df)
 main_df = pd.concat(dfs)  # Juncao de todos os arquivos em um Dataframe
 
 # Novo atributo: idade calculada (vide funcao "calculo idade" para formula)
@@ -49,9 +53,9 @@ def get_df_mes_ano(mes, ano):
 # Listas de lista dos valores de interesse.
 # Cada lista contempla um hospital em dado mes e ano.
 # Valores, em ordem:
-# [year, month, CNES (Hospital), quarter, time_index, sin_month, cos_month, J_count, J_morte_share,
-# J_dias_perm_mean, J_dias_perm_p90, J_uti_share, J_uti_days_mean, J_val_tot_mean,
-# J_val_tot_p90, J_val_uti_share, J_sex_f_share, J_sex_m_share, J_age_60p_share,
+# [year, month, CNES (Hospital), region (estado), quarter, time_index, sin_month, cos_month,
+# J_count, J_morte_share, J_dias_perm_mean, J_dias_perm_p90, J_uti_share, J_uti_days_mean,
+# J_val_tot_mean, J_val_tot_p90, J_val_uti_share, J_sex_f_share, J_sex_m_share, J_age_60p_share,
 # J_missing_raca_share, J00_06_share, J09_18_share, J20_22_share, J40_47_share, J_bucket_entropy,
 # catchment_munic_unique, catchment_top1_share, catchment_entropy, catchment_outside_local_share,
 # J_missing_diag_sec_share, J_missing_proc_share]
@@ -111,6 +115,7 @@ while ano < 2025 or mes < 12:
                 ano,  # year
                 mes,  # month
                 hos,  # CNES
+                h_df["region"].values[0],  # region
                 int((mes - 1) / 3 + 1),  # quarter
                 ano * 12 + mes,  # time_index
                 np.sin(2 * np.pi * mes / 12),  # sin_month
@@ -128,14 +133,26 @@ while ano < 2025 or mes < 12:
                 / sizeh,  # J_sex_f_share
                 h_df["SEXO"][(h_df.SEXO == "M") | (h_df.SEXO == 1)].shape[0]
                 / sizeh,  # J_sex_m_share
-                h_df["age_years"][h_df.age_years > 60].shape[0]
+                h_df["age_years"][h_df.age_years >= 60].shape[0]
                 / sizeh,  # J_age_60p_share
+                h_df["age_years"][(h_df.age_years < 60) & (h_df.age_years >= 15)].shape[
+                    0
+                ]
+                / sizeh,  # J_age_15_59_share
+                h_df["age_years"][h_df.age_years < 15].shape[0]
+                / sizeh,  # J_age_0_14_share
                 h_df["RACA_COR"][
                     (h_df.RACA_COR.isnull())
                     | (h_df.RACA_COR == 0)
-                    | (h_df.RACA_COR == 9)
+                    | (h_df.RACA_COR >= 6)
                 ].shape[0]
                 / sizeh,  # J_missing_raca_share
+                h_df["RACA_COR"][h_df.RACA_COR == 1].shape[0]
+                / sizeh,  # J_raca_branca_share
+                h_df["RACA_COR"][h_df.RACA_COR == 2].shape[0]
+                / sizeh,  # J_raca_negra_share
+                h_df["RACA_COR"][(h_df.RACA_COR >= 3) & (h_df.RACA_COR <= 5)].shape[0]
+                / sizeh,  # J_raca_outras_share
                 bucket_1,  # J00_06_share
                 bucket_2,  # J09_18_share
                 bucket_3,  # J20_22_share
@@ -167,7 +184,6 @@ while ano < 2025 or mes < 12:
                 / sizeh,  # J_missing_proc_share
             ]
         )
-        break
 
     mes += 1
     if mes > 12:
@@ -180,6 +196,7 @@ df_final = pd.DataFrame(
         "year",
         "month",
         "CNES",
+        "region",
         "quarter",
         "time_index",
         "sin_month",
@@ -196,7 +213,12 @@ df_final = pd.DataFrame(
         "J_sex_f_share",
         "J_sex_m_share",
         "J_age_60p_share",
+        "J_age_15_59_share",
+        "J_age_0_14_share",
         "J_missing_raca_share",
+        "J_raca_branca_share",
+        "J_raca_preta_share",
+        "J_raca_outras_share",
         "J00_06_share",
         "J09_18_share",
         "J20_22_share",

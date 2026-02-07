@@ -38,7 +38,13 @@ def get_atributos_grupo2(lag_df):
         lag_df.J_val_tot_p90.values[0],  # J_val_tot_p90_lagN
         lag_df.J_val_uti_share.values[0],  # J_val_uti_share_lagN
         lag_df.J_sex_m_share.values[0],  # J_sex_m_share_lagN
+        lag_df.J_sex_f_share.values[0],  # J_sex_f_share_lagN
         lag_df.J_age_60p_share.values[0],  # J_age_60p_share_lagN
+        lag_df.J_age_15_59_share.values[0],  # J_age_15_59_share_lagN
+        lag_df.J_age_0_14_share.values[0],  # J_age_0_14_share_lagN
+        lag_df.J_raca_branca_share.values[0],  # J_raca_branca_share_lagN
+        lag_df.J_raca_preta_share.values[0],  # J_raca_preta_share_lagN
+        lag_df.J_raca_outras_share.values[0],  # J_raca_outras_share_lagN
         lag_df.J_missing_raca_share.values[0],  # J_missing_raca_share_lagN
         lag_df.catchment_munic_unique.values[0],  # catchment_munic_unique_lagN
         lag_df.catchment_top1_share.values[0],  # catchment_top1_share_lagN
@@ -117,6 +123,7 @@ while ano < 2025 or mes < 12:
             ano,  # year
             mes,  # month
             hos,  # CNES
+            hos_df.region.values[0],  # region
             int((mes - 1) / 3 + 1),  # quarter
             ano * 12 + mes,  # time_index
             np.sin(2 * np.pi * mes / 12),  # sin_month
@@ -134,7 +141,7 @@ while ano < 2025 or mes < 12:
                 if lag == 2 or lag == 6:
                     val.extend([np.nan for _ in range(0, 6)])
                 else:
-                    val.extend([np.nan for _ in range(0, 23)])
+                    val.extend([np.nan for _ in range(0, 29)])
             else:
                 val.extend(get_atributos_grupo1(lag_df))
                 if lag == 1 or lag == 3 or lag == 12:
@@ -164,7 +171,7 @@ while ano < 2025 or mes < 12:
                 val_ma3,  # J_count_ma3_lag1
                 val_ma6,  # J_count_ma6_lag1
                 val_ma12,  # J_count_ma12_lag1
-                val[8] - val[31],  # J_growth_1m_lag1
+                val[9] - val[38],  # J_growth_1m_lag1
                 hos_df.J_count.values[0],  # J_count
             ]
         )
@@ -183,6 +190,7 @@ df_final = pd.DataFrame(
         "year",
         "month",
         "CNES",
+        "region",
         "quarter",
         "time_index",
         "sin_month",
@@ -203,7 +211,13 @@ df_final = pd.DataFrame(
         "J_val_tot_p90_lag1",
         "J_val_uti_share_lag1",
         "J_sex_m_share_lag1",
+        "J_sex_f_share_lag1",
         "J_age_60p_share_lag1",
+        "J_age_15_59_share_lag1",
+        "J_age_0_14_share_lag1",
+        "J_raca_branca_share_lag1",
+        "J_raca_preta_share_lag1",
+        "J_raca_outras_share_lag1",
         "J_missing_raca_share_lag1",
         "catchment_munic_unique_lag1",
         "catchment_top1_share_lag1",
@@ -232,7 +246,13 @@ df_final = pd.DataFrame(
         "J_val_tot_p90_lag3",
         "J_val_uti_share_lag3",
         "J_sex_m_share_lag3",
+        "J_sex_f_share_lag3",
         "J_age_60p_share_lag3",
+        "J_age_15_59_share_lag3",
+        "J_age_0_14_share_lag3",
+        "J_raca_branca_share_lag3",
+        "J_raca_preta_share_lag3",
+        "J_raca_outras_share_lag3",
         "J_missing_raca_share_lag3",
         "catchment_munic_unique_lag3",
         "catchment_top1_share_lag3",
@@ -261,7 +281,13 @@ df_final = pd.DataFrame(
         "J_val_tot_p90_lag12",
         "J_val_uti_share_lag12",
         "J_sex_m_share_lag12",
+        "J_sex_f_share_lag12",
         "J_age_60p_share_lag12",
+        "J_age_15_59_share_lag12",
+        "J_age_0_14_share_lag12",
+        "J_raca_branca_share_lag12",
+        "J_raca_preta_share_lag12",
+        "J_raca_outras_share_lag12",
         "J_missing_raca_share_lag12",
         "catchment_munic_unique_lag12",
         "catchment_top1_share_lag12",
