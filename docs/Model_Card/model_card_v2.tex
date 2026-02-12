@@ -1,0 +1,112 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+
+% Esse Template é uma adaptação do modelo feito por Christian Garbin:
+% https://www.overleaf.com/latex/templates/model-card-template/fjmvzbbbxmwx
+% Licenciada pelo Creative Commons CC BY 4.0
+
+% Poucas adaptações foram feitas. Foram modificadas as disposições das tabelas,
+% traduziu-se os textos e foi retirado o texto introdutório,
+% a fim de facilitar o uso desse template.
+
+% Para saber mais sobre o uso de Model Cards, segue-se o artigo que propôs essa ferramenta:
+% https://arxiv.org/abs/1810.03993
+
+
+% Usado no Template
+\usepackage{setspace}
+\usepackage{subcaption}
+\usepackage{changepage} % Ajuste das margens
+\usepackage[breakable]{tcolorbox}
+\usepackage{float} % Para as tabelas de tcolorbox https://tex.stackexchange.com/a/274342
+\usepackage{enumitem}
+\usepackage{geometry}
+
+\geometry{vmargin=30pt,hmargin=30pt}
+\begin{document}
+
+
+% Cada seção deve ser breve, em formato de lista
+% Esse template faz a formatação das listas de foma compacta para facilitar manter
+% o model card dentro da recomendação de uma a duas páginas.
+\newenvironment{mcsection}[1]
+    {%
+        \textbf{#1}
+
+        % Redução das margens para uso melhor do espaço
+        \begin{itemize}[leftmargin=*,topsep=0pt,itemsep=-1ex,partopsep=1ex,parsep=1ex,after=\vspace{\medskipamount}]
+    }
+    {%
+        \end{itemize}
+    }
+
+\begin{singlespace}
+
+\tcbset{colback=white!10!white}
+
+% Título do model card, alterar aqui
+\begin{tcolorbox}[title=\textbf{Model Card - Modelo de Teste NIAR},
+    breakable, sharp corners, boxrule=0.7pt]
+
+% Small: reduz tamanho da fonte para uma pequena, mas legível.
+\small{
+
+
+\begin{mcsection}{Detalhes do Modelo}
+    \item Esse modelo (versão 2.0) foi desenvolvido por Luís Eduardo Limas Brito, XX/02/2026.
+    \item Ele foi criado a fim de apresentar um exemplo prático de implementação da checklist proposta pelo NIAR.
+    \item Modelo de Predição, com o objetivo de estimar o número de internações por doenças respiratórias (CID = J...) em um hospital para um dado mês.
+    \item Há implementação de dois modelos, a fim de comparação da qualidade dos resultados. Regressão linear (implementado usando "scikit-learn") e LightGBM (modelo criado Microsoft).
+\end{mcsection}
+
+\begin{mcsection}{Uso pretendido}
+    \item O modelo pode ser usado por hospitais para analisar estimativas de quantas internações podem-se esperar para o próximo mês, a fim de assistir no processo de escolha dos gastos e aquisição de recursos.
+    \item O modelo não deve ser usado para assistir casos de pacientes individualmente.
+\end{mcsection}
+
+\begin{mcsection}{Fatores}
+    \item Devido à quantidade de atributos, é provável que o usuário não terá acesso a todos os dados necessários. Por isso, a ausência de alguns (valores nulos) podem afetar o resultado obtido.
+    \item Durante o processamento dos dados, foram retirados hospitais com poucos casos (vide Data Card), a fim de evitar instabilidades no modelo. Assim, o modelo não é recomendado para uso com hospitais com baixa quantidade de internações.
+    \item O estudo de justiça revelou que fatores sociais podem levemente afetar o resultado recebido, baseado na quantidade relativa de pessoas de diferentes sexos, idades e etnias. Pelo outro lado, diferentes regiões apresentaram alta disparidade na qualidade de resultados. Segue-se um gráfico ilustrando as diferenças na seção \textit{Análise Quantitativa}
+\end{mcsection}
+
+
+\begin{mcsection}{Dados de Treinamento}
+    \item O modelo foi treinado nos dados do DataSUS. Especificamente, os do tipo SIH (Internações Hospitalares), com arquivos reduzidos (começam com RD), de todos os estados, dos anos de 2022 a 2024/06.
+    \item Pré Processamento: os dados foram agrupados por hospital e mês/ano, contabilizando o total e calculando dados como média e razão de algumas colunas. Cada atributo usado para treinamento é uma defasagem temporal dos dados calculados no passo anterior (dados dos meses passados).
+    \item Hospitais com uma média mensal abaixo de 5 internações foram retiradas.
+    \item Vide \textit{data\_card.md} para informações mais detalhadas sobre o processamento e propriedades dos dados.
+\end{mcsection}
+
+\begin{mcsection}{Dados de Avaliação}
+    \item Para o LightGBM, foi usado dados para validação (dados de 2024/7 até 2024/12 do DataSUS), seguindo o mesmo pré processamento dos dados de treinamento.
+    \item Para realização de testes, foram usados os dados de 2025/01 até 2025/11 (com exceção dos estados do Acre e Roraima - "AC" e "RR" - que não estavam disponíveis ainda). Também passaram pelo mesmo processo citado acima.
+\end{mcsection}
+
+\begin{mcsection}{Métricas}
+    \item Essa versão apresenta métricas por grupo em vez de métrica geral. Como as métricas de MAE e RMSE trabalham com valores absolutos, diferentes números de amostras afetam o resultado obtido.
+    \item Por esse motivo, decidiu-se usar apenas a métrica sMAPE (Erro Médio Absoluto Simétrico Percentual), uma vez que o valor é dado em percentual.
+    \item A avaliação do desempenho foi separado pelos seguintes grupos: Sexo, Idade, Raça e Região. Para cada dado, categoriza-se baseado na quantidade maior de presença de algum grupo (por exemplo, um dado com maior quantidade de mulheres é categorizado como "Feminino", na categoria Sexo), exceto região, no qual cada dado naturalmente já contém essa informação por padrão.
+\end{mcsection}
+
+\begin{mcsection}{Avisos e Recomendações}
+    \item Esse modelo foi desenvolvido somente com intuito educacional, não devendo ser aplicado em nenhum contexto real, devido à alta taxa de erro apresentada pelo modelo.
+    \item Para informações extras sobre o processo de aplicação das metodologias propostas pelo NIAR, vide os documentos presentes dentro das pastas \textit{docs} e \textit{audit}.
+\end{mcsection}
+
+\pagebreak
+
+\centering
+\textbf{Análise Quantitativa}
+\includegraphics[width=\linewidth]{../Justica/Imagens/idade_v2.png}
+\includegraphics[width=\linewidth]{../Justica/Imagens/raca_v2.png}
+\includegraphics[width=\linewidth]{../Justica/Imagens/sexo_v2.png}
+\includegraphics[width=\linewidth]{../Justica/Imagens/regiao_v2.png}
+
+
+}
+\end{tcolorbox}
+\end{singlespace}
+
+\end{document}
