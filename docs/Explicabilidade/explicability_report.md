@@ -52,8 +52,36 @@ raça também impactam o modelo bastante, assim como o porte do hospital.
 ## 3: Resultados Locais
 
 - A fim de ilustrar o modelo em funcionamento, alguns gráficos foram
-gerados apresentando como um dado é processado, desde o
+gerados apresentando como um dado é processado, mostrando como cada atributo
+altera o valor base.
 
 ![Explicação Local 1](./Imagens/local.png "Explicação local exemplo 1")
 ![Explicação Local 2](./Imagens/local2.png "Explicação local exemplo 2")
 ![Explicação Local 3](./Imagens/local3.png "Explicação local exemplo 3")
+
+## 4: Análise regional
+
+- Acompanhando a análise de justiça do modelo, foi feito uma análise por região,
+verificando como os atributos se comportavam dado uma região.
+- Devido à quantidade de resultados, será apresentado apenas 3 gráficos
+(AC, AL, MG, respectivamente) obtidos, que serviram de exemplificação das
+conclusões obtidas.
+
+![Explicação regional AC](./Imagens/ac.png "Explicação regional de AC")
+![Explicação regional AL](./Imagens/al.png "Explicação regional de AL")
+![Explicação regional MG](./Imagens/mg.png "Explicação regional de MG")
+
+- Notou-se que as regiões apresentavam comportamento igual quanto aos atributos
+que mais impactam ("J_count_ma12_lag1", "hospital_porte" e "J_count_lag12"),
+assim como quais direções esses atributos impactam. No entanto, há uma diferença
+quanto à escala (observe os valores no eixo x).
+
+## 5: Conclusão
+
+- A partir das observações retiradas, nota-se que para o modelo, as informações
+mais importantes são o tipo do hospital, a quantidade de pessoas de diferentes
+faixas etárias, sua média mensal no últimos 12 meses e quantas internações ele
+teve no mesmo mês no ano passado. Outras informações que também impactam são a
+quantidade de pessoas de diferentes sexos e etnias.
+- Notou-se também que, diferentemente da análise de justiça, a diferença entre as
+regiões é pequena, apresentando um comportamento similar sobre os atributos.
