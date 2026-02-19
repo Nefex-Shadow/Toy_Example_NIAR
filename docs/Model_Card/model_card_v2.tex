@@ -54,10 +54,10 @@
 
 
 \begin{mcsection}{Detalhes do Modelo}
-    \item Esse modelo (versão 2.0) foi desenvolvido por Luís Eduardo Limas Brito, XX/02/2026.
+    \item Esse modelo (versão 2.0) foi desenvolvido por Luís Eduardo Limas Brito, 18/02/2026.
     \item Ele foi criado a fim de apresentar um exemplo prático de implementação da checklist proposta pelo NIAR.
     \item Modelo de Predição, com o objetivo de estimar o número de internações por doenças respiratórias (CID = J...) em um hospital para um dado mês.
-    \item Há implementação de dois modelos, a fim de comparação da qualidade dos resultados. Regressão linear (implementado usando "scikit-learn") e LightGBM (modelo criado Microsoft).
+    \item Há implementação de dois modelos, a fim de comparação da qualidade dos resultados. Regressão linear (implementado usando "scikit-learn") e LightGBM (modelo criado Microsoft). Para LightGBM, devido ao uso de sementes aleatórias, decidiu-se executá-la 5 vezes e triou-se a média dos resultados avaliativos dele. As sementes usadas são, em ordem de execução: 778, 768, 758, 748, 738.
 \end{mcsection}
 
 \begin{mcsection}{Uso pretendido}

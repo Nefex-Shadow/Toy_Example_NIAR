@@ -62,7 +62,8 @@ a remoção de dados ("under-sampling") resultaria em poucos dados no total para
 treinamento do modelo.
 
   Para reamostragem, foi utilizada a ferramenta SMOTENC, varição de SMOTE capaz
-de trabalhar com dados categóricos.
+de trabalhar com dados categóricos. A fim de garantir replicabilidade, foi definido
+uma semente aleatória fixada, com valor 17.
 
 - **Amostragem inicial:**
 
@@ -77,10 +78,10 @@ de trabalhar com dados categóricos.
 ## 5: Reavaliação
 
   Notou-se uma pequena diminuição da disparidade encontrada anterior,
-reduzindo de 39% para 35%. Em especial, houve uma melhora na performance
+reduzindo de 39% para 34%. Em especial, houve uma melhora na performance
 geral do modelo em relação às regiões. A maioria agora se concentra especificamente
 na casa dos 40%, com poucos sobressaindo esse valor. O pior caso desceu de 70% para
-62% e o melhor caso caiu de 31% para 27%.
+62% e o melhor caso caiu de 31% para 28%.
 
   Quanto às outras categorias, cumpriu-se o objetivo de mantê-las similares, evitando
 assim de criar uma nova diferença de desempenho entre os outros grupos.

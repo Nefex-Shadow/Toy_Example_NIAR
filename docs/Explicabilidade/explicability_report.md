@@ -29,8 +29,8 @@ soma ou subtrai desse valor base, até que não haja mais atributos. Ao final,
 esse grafo apresenta os atributos que mais impactaram o resultado, junto de seus
 valores e por quanto eles afetaram.
 - Por exemplo, para esse dado, o atributo "J_age_0_14_share_lag12" -
-cujo valor é 1 - subtrai 0.13 do valor base, enquanto "J_count_ma12_lag1" -
-com valor 37 - aumenta o valor base em 0.22.
+cujo valor é 1 - subtrai 0.11 do valor base, enquanto "J_count_ma12_lag1" -
+com valor 37 - aumenta o valor base em 0.23.
 - Para esse caso, notou-se que os atributos referentes ao grupos de idade alteraram
 bastante o resultado, além da média dos 12 meses passados, a qual foi a mais impactante.
 
