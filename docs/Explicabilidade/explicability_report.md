@@ -23,15 +23,16 @@ de regressão linear usado.
 valores, para um dado específico (nesse caso, o primeiro dado do dataset de
 teste).
 - Um atributo é muito impactante quando ele altera bastante o valor base em alguma
-direção. Em outras palavras, quando o modelo está calculando o valor resultante,
-ele começa com um valor base (normalmente, o valor mais provável de ser retornado
-pelo modelo) e cada atributo (dependendo do seu valor) soma ou subtrai desse valor
-base, até que não haja mais atributos. No fim do processo, as alterações resultam
-no valor final retornado pelo modelo.
-- Por exemplo, durante o cálculo do valor final, se o atributo "J_age_0_14_share_lag12"
-de um dado possui valor 1, subtrai-se 0.17 do valor base.
+direção. Em outras palavras, começando de um valor base (normalmente, o valor mais
+provável de ser retornado pelo modelo), cada atributo (dependendo do seu valor)
+soma ou subtrai desse valor base, até que não haja mais atributos. Ao final,
+esse grafo apresenta os atributos que mais impactaram o resultado, junto de seus
+valores e por quanto eles afetaram.
+- Por exemplo, para esse dado, o atributo "J_age_0_14_share_lag12" -
+cujo valor é 1 - subtrai 0.13 do valor base, enquanto "J_count_ma12_lag1" -
+com valor 37 - aumenta o valor base em 0.22.
 - Para esse caso, notou-se que os atributos referentes ao grupos de idade alteraram
-bastante o resultado.
+bastante o resultado, além da média dos 12 meses passados, a qual foi a mais impactante.
 
 ![Explicação local do dado 5](./Imagens/waterfall5.png "Explicação local do dado 5")
 ![Explicação local do dado 100](./Imagens/waterfall100.png "Explicação local do dado 100")
@@ -39,12 +40,13 @@ bastante o resultado.
 
 - Observando o comportamento dos atributos em outros dados, nota-se que
 os atributos afetam muito o resultado dependendo de seu valor. Por exemplo,
-o porte do hospital afeta positivamente o resultando quando o hospital é
-grande (porte = 3) e afeta negativamente para hospitais pequenos (porte = 1).
+a média de internações dos 12 meses passados afeta positivamente o resultando
+quando ela é alta (> 30) e afeta negativamente quando ela é baixa (< 20).
 Esse comportamento dos atributos será explorado melhor na próxima seção.
 - Nota-se que "J_count_ma12_lag1" é o atributo mais comum e mais impactante nos
 gráficos. Isso indica que o modelo depende bastante desse dado para retornar
-suas previsões.
+suas previsões. Porém nota-se também que atributos relacionados à raça podem
+impactar os resultados dependendo de seu valor.
 
 ## 3: Resultados Globais
 
@@ -61,7 +63,7 @@ influência no valor final.
 - Por exemplo, para o atributo "J_count_ma12_lag1", valores altos (pontos
 vermelhos) alteram o resultado obtido positivamente (lado direito da linha
 central, 1.5+), enquanto valores baixos (pontos azuis) alteram negativamente
-(lado esquerdo -0.5).
+(lado esquerdo -0.7).
 - Esse gráfico revela que, além dos atributos sobre idade, atributos sobre
 raça também impactam o modelo bastante, assim como o porte do hospital.
 
