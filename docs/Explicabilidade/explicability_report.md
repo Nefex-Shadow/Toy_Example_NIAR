@@ -13,14 +13,15 @@ de regressão linear usado.
 
   **Obs:** Os gráficos retirados vem do modelo pós avaliação de justiça.
 
-## 2: Resultados Gerais
+## 2: Resultados Locais
 
-  Segue-se os resultados obtidos. A explicação de cada um se encontra logo em seguida.
+  Segue-se os resultados obtidos. A explicação se encontra logo em seguida.
 
-![Explicação Waterfall](./Imagens/waterfall.png "Explicação geral modelo Waterfall")
+![Explicação local do dado 0](./Imagens/waterfall0.png "Explicação local do dado 0")
 
 - Esse gráfico apresenta os 9 atributos mais impactantes, e seus respectivos
-valores, no modelo.
+valores, para um dado específico (nesse caso, o primeiro dado do dataset de
+teste).
 - Um atributo é muito impactante quando ele altera bastante o valor base em alguma
 direção. Em outras palavras, quando o modelo está calculando o valor resultante,
 ele começa com um valor base (normalmente, o valor mais provável de ser retornado
@@ -29,8 +30,23 @@ base, até que não haja mais atributos. No fim do processo, as alterações res
 no valor final retornado pelo modelo.
 - Por exemplo, durante o cálculo do valor final, se o atributo "J_age_0_14_share_lag12"
 de um dado possui valor 1, subtrai-se 0.17 do valor base.
-- No geral, nota-se que os atributos referentes ao grupos de idade alteram
+- Para esse caso, notou-se que os atributos referentes ao grupos de idade alteraram
 bastante o resultado.
+
+![Explicação local do dado 5](./Imagens/waterfall5.png "Explicação local do dado 5")
+![Explicação local do dado 100](./Imagens/waterfall100.png "Explicação local do dado 100")
+![Explicação local do dado 9038](./Imagens/waterfall9038.png "Explicação local do dado 9038")
+
+- Observando o comportamento dos atributos em outros dados, nota-se que
+os atributos afetam muito o resultado dependendo de seu valor. Por exemplo,
+o porte do hospital afeta positivamente o resultando quando o hospital é
+grande (porte = 3) e afeta negativamente para hospitais pequenos (porte = 1).
+Esse comportamento dos atributos será explorado melhor na próxima seção.
+- Nota-se que "J_count_ma12_lag1" é o atributo mais comum e mais impactante nos
+gráficos. Isso indica que o modelo depende bastante desse dado para retornar
+suas previsões.
+
+## 3: Resultados Globais
 
 ![Explicação Summary](./Imagens/sumary.png "Explicação geral modelo Summary")
 
@@ -45,19 +61,9 @@ influência no valor final.
 - Por exemplo, para o atributo "J_count_ma12_lag1", valores altos (pontos
 vermelhos) alteram o resultado obtido positivamente (lado direito da linha
 central, 1.5+), enquanto valores baixos (pontos azuis) alteram negativamente
-(lado esquerdo).
+(lado esquerdo -0.5).
 - Esse gráfico revela que, além dos atributos sobre idade, atributos sobre
 raça também impactam o modelo bastante, assim como o porte do hospital.
-
-## 3: Resultados Locais
-
-- A fim de ilustrar o modelo em funcionamento, alguns gráficos foram
-gerados apresentando como um dado é processado, mostrando como cada atributo
-altera o valor base.
-
-![Explicação Local 1](./Imagens/local.png "Explicação local exemplo 1")
-![Explicação Local 2](./Imagens/local2.png "Explicação local exemplo 2")
-![Explicação Local 3](./Imagens/local3.png "Explicação local exemplo 3")
 
 ## 4: Análise regional
 
